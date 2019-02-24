@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      div {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        height: 100px;
+        width: 100px;
+        background-color: aquamarine;
+      }
+
+      .visible {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <select>
+      <option value="filter">1</option>
+      <option value="slice">2</option>
+      <option value="regex">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+
+    <div id="filter" class="visible">filter blablab</div>
+    <div id="slice">slice blabla</div>
+    <div id="regex">regexblabla</div>
+
+    <script>
+      const selection = document.querySelector("select");
+      const messages = [...document.querySelectorAll("div")];
+      let selected;
+
+      function displayConsoleOne() {
+        console.log("funkcja 1");
+      }
+
+      function displayConsoleTwo() {
+        console.log("funkcja 2");
+      }
+
+      function displayConsoleThree() {
+        console.log("funkcja 3");
+      }
+      const functions = {
+        filter: displayConsoleOne,
+        slice: displayConsoleTwo,
+        regex: displayConsoleThree
+      };
+
+      selection.addEventListener("change", e => {
+        messages
+          .filter(div => div.classList.contains("visible"))[0]
+          .classList.remove("visible");
+
+        messages
+          .filter(div => div.id === e.target.value)[0]
+          .classList.add("visible");
+
+        selected = e.target.value;
+      });
+
+      function init() {
+        return functions[selected]();
+      }
+
+      document.addEventListener("click", init);
+
+      //   let selected = selection.filter(option => option.selected === true)[0].value;
+    </script>
+  </body>
+</html>

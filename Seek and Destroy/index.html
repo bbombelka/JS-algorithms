@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Major+Mono+Display" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Seek and Destroy challenge by freeCodeCamp</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <!-- LEFT SIDE  -->
+      <div class="font leftside-bar">
+        <h1>Intermediate Algorithm Scripting: <br />Seek and Destroy</h1>
+        <p>
+          You will be provided with an initial array (the first argument in the destroyer function),
+          followed by one or more arguments. Remove all elements from the initial array that are of
+          the same value as these arguments.
+        </p>
+        <h4>Note</h4>
+        <p>You have to use the arguments object.</p>
+        <div class="modus">
+          <h4>Modus operandi:</h4>
+
+          <pre><code>([1, 2, 3, 1, 2, 3],2,3)=> [1,1]</code>
+          <code> 
+          (["possum", "trollo", 12, "safari", "hotdog", 92,
+           65, "grandma","bugati", "trojan", "yacht"], "yacht", "possum", 
+           "trollo","safari", "hotdog", "grandma", "bugati", "trojan") =>
+          [12,92,65]</code>
+        </pre>
+        </div>
+      </div>
+      <!-- MAIN CONTENT -->
+      <div class="center-content">
+        <h1 class="font width" style="margin:auto; text-align:center">mission report</h1>
+        <select id="missions" class="box">
+          <option value="attemptOne">Attempt 1</option>
+          <option value="attemptTwo">Attempt 2</option>
+          <option value="attemptThree">Attempt 3</option>
+          <option value="attemptFour">Attempt 4</option>
+        </select>
+        <div id="show" class="width">
+          <pre>
+          <code id='attemptOne' class='selection width visible'>
+          const destroyer = (arr, ...args) => arr.filter(elem => !args.includes(elem));
+          </code>
+          <code id='attemptTwo' class='selection width'>
+          const destroyerTwo = (arr, ...args) => {
+          const tempArr = Array();
+            
+          arr.map(elem => {
+            if (args.indexOf(elem) === -1) tempArr.push(elem) } );
+                  
+            return (arr = tempArr);
+          };
+          </code>
+          <code id="attemptThree" class='selection'>
+          const destroyerThree = (arr, ...args) => {
+            args.map(elem => {
+              const initLength = arr.length;
+              
+                for (let i = initLength - 1; i > -1; i--) {
+                  if (arr[i] === elem) arr.splice(i, 1);
+                  }
+              });
+                
+              return arr;
+              };
+            </code>
+            <code id="attemptFour" class='selection'>
+          const destroyerFour = (arr, ...args) => {
+          // first conversion of number elements into strings
+          arr.map((elem, idx) => {
+            if (typeof elem == "number") arr[idx] = elem.toString();
+            });
+          // array intro string
+            arr = arr.join("-");
+            
+          // actual replacement
+            args.map(elem => {
+              arr = arr.replace(new RegExp(elem, "ig"), "");
+            });
+          //devoiding of hyphens
+          arr = arr
+              .replace(/-(?=-)/gi, "") // those with at least another one in front
+              .replace(/^-|-$|/gi, "") // trimming the string (chaining with the regexp above doesnt work)
+              .split("-"); // back to array
+              
+          arr.map((elem, idx) => {
+          // conversion of pure number strings - mixed ones do not meet the condition
+            if (/\d/.test(elem) && !/[a-z]/i.test(elem)) arr[idx] = parseInt(elem, 10);
+            });
+              
+          return arr;
+          };
+            </code>
+        </pre>
+        </div>
+
+        <form>
+          <div class="form-element width">
+            <label for="first-arg" class="font">Enter the array with items</label>
+            <input
+              type="text"
+              id="first-arg"
+              autocomplete="off"
+              placeholder="Enter first argument (comma separated)"
+            /><br />
+            <span id="error-first" class="error"></span>
+          </div>
+          <div class="form-element width">
+            <label for="second-arg" class="font">Enter the items you want to remove</label>
+            <input
+              type="text"
+              id="second-arg"
+              autocomplete="off"
+              placeholder="Enter elements you want to destroy (comma separated)"
+            />
+            <br />
+            <span id="error-second" class="error error-second"></span>
+          </div>
+          <div class="width button-container">
+            <button class="destroy font">Seek and Destroy !</button>
+          </div>
+        </form>
+        <div id="result" class="width font"></div>
+      </div>
+    </div>
+    <script type="module" src="./algorithms/version1.js"></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
