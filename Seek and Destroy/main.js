@@ -27,7 +27,7 @@ let first;
 let second;
 let selected = functions.attemptOne;
 
-// parsowanie argumentow
+// parsing the arguments
 
 function parse(str) {
   return str
@@ -37,10 +37,7 @@ function parse(str) {
 
 //-- event listeners
 
-// obsługa select
 missionSelection.addEventListener('change', e => {
-  codePrev.forEach(code => console.log(e.target.value));
-
   codePrev.filter(code => code.classList.contains('visible'))[0].classList.remove('visible');
 
   codePrev.filter(code => code.id === e.target.value)[0].classList.add('visible');
@@ -48,7 +45,7 @@ missionSelection.addEventListener('change', e => {
   selected = functions[e.target.value];
 });
 
-// walidacja (symboliczna :-) można rozwinąć) argumentow
+// validation
 
 firstArgument.addEventListener('blur', () => {
   firstArgument.value.length === 0
