@@ -54,7 +54,6 @@ function prepareReservedSeats(reservedSeats) {
   );
 }
 
-
 // second version
 
 function planeSeatsAllocatorVersionTwo(numberOfRows, reservedSeats = '') {
@@ -79,7 +78,7 @@ function planeSeatsAllocatorVersionTwo(numberOfRows, reservedSeats = '') {
     const seatLetter = seat[seat.length - 1];
     return {
       rowIndex: parseInt(seat) - 1,
-      columnIndex: getColumnIndex(seatLetter);
+      columnIndex: getColumnIndex(seatLetter),
       seatLetter,
     };
   };
@@ -97,4 +96,23 @@ function planeSeatsAllocatorVersionTwo(numberOfRows, reservedSeats = '') {
     .map((row) => row.map(convertToBool))
     .flat()
     .filter((bool) => !bool).length;
+}
+
+function planeSeatsAllocatorVersionThree(numberOfRows, reservedSeats = '') {
+  if (numberOfRows < 1 || numberOfRows > 50) {
+    return;
+  }
+
+  const middleSeats = ['D', 'E', 'F', 'G'];
+
+  const sideColumns = [];
+  const middleColumn = [];
+
+  reservedSeats.split(' ').forEach((seat) => {
+    const letter = seat[seat.length - 1];
+
+    middleSeats.includes(letter) ? middleColumn.push(seat) : sideColumns.push(seat);
+  });
+
+  return sideColumns;
 }
